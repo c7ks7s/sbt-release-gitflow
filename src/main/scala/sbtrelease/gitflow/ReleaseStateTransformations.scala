@@ -57,9 +57,9 @@ object ReleaseStateTransformations {
     
     def findReleaseBranch(searchRemote: Boolean) : Option[String] = {
       val result =
-        git.localBranches.find(_.startsWith("release/")) orElse {
+        git.localBranches.find(_.equals(calcReleaseBranch(currentVersion))) orElse {
           if(searchRemote) {
-            git.remoteBranches.find(_._2.startsWith("release/")).map(_._2)
+            git.remoteBranches.find(_._2.equals(calcReleaseBranch(currentVersion))).map(_._2)
           } else {
             None
           }
