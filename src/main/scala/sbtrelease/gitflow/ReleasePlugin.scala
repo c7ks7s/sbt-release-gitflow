@@ -211,7 +211,7 @@ object ReleasePlugin extends AutoPlugin {
             commitMessage = calcVersionChangeCommitMessage(releaseVersion)
           )
 
-          log.info("Checking out Master branch to merge... ")
+          log.info("Checking out master branch to merge... ")
           checkoutBranch(masterBranch)
           log.info(s"Merging release branch: ${releaseBranch} into master... ")
           mergeBranch(
@@ -225,6 +225,12 @@ object ReleasePlugin extends AutoPlugin {
           mergeBranch(
             branchName = releaseBranch,
             flags = Seq("--no-ff","--strategy-option","theirs")
+          )
+          val developBranchVersion = currentVersion
+          log.info(s"Resetting develop branch version to ${developBranchVersion}... ")
+          updateVersionFile(developBranchVersion)
+          addAndCommitVersionFile(
+            commitMessage = calcVersionChangeCommitMessage(developBranchVersion)
           )
 
           tag(tagName,tagComment)
