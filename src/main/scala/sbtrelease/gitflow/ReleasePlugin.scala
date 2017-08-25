@@ -210,14 +210,30 @@ object ReleasePlugin extends AutoPlugin {
           addAndCommitVersionFile(
             commitMessage = calcVersionChangeCommitMessage(releaseVersion)
           )
+
+          log.info("Checking out Master branch to merge... ")
           checkoutBranch(masterBranch)
+          log.info(s"Merging release branch: ${releaseBranch} into master... ")
           mergeBranch(
             branchName = releaseBranch,
             flags = Seq("--no-ff","--strategy-option","theirs")
           )
+
+          log.info("Checking out develop branch to merge... ")
+          checkoutBranch(developBranch)
+          log.info(s"Merging release branch: ${releaseBranch} into develop... ")
+          mergeBranch(
+            branchName = releaseBranch,
+            flags = Seq("--no-ff","--strategy-option","theirs")
+          )
+
           tag(tagName,tagComment)
+          log.info("Pushing master branch... ")
           pushBranch(masterBranch)
+          log.info("Pushing release branch... ")
           pushBranch(releaseBranch)
+          log.info("Pushing develop branch... ")
+          pushBranch(developBranch)
           pushTag(tagName)
           deleteLocalAndRemoteBranch(releaseBranch)
         }
