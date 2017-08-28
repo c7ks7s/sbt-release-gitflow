@@ -226,7 +226,7 @@ object ReleasePlugin extends AutoPlugin {
             branchName = releaseBranch,
             flags = Seq("--no-ff","--strategy-option","theirs")
           )
-          val developBranchVersion = currentVersion
+          val developBranchVersion = calcNextSnapshotVersion(currentVersion)
           log.info(s"Resetting develop branch version to ${developBranchVersion}... ")
           updateVersionFile(developBranchVersion)
           addAndCommitVersionFile(
