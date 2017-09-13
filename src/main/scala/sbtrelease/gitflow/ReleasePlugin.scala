@@ -236,8 +236,6 @@ object ReleasePlugin extends AutoPlugin {
           tag(tagName,tagComment)
           log.info("Pushing master branch... ")
           pushBranch(masterBranch)
-          log.info("Pushing release branch... ")
-          pushBranch(releaseBranch)
           log.info("Pushing develop branch... ")
           pushBranch(developBranch)
           pushTag(tagName)
