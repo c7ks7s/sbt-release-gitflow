@@ -1,3 +1,5 @@
+= ARCHIVED -- NO LONGER MAINTAINED
+
 = sbt-release-gitflow: sbt plugin that handles all gitflow release steps
 Lance Gatlin <lance.gatlin@gmail.com>
 v1,21-Jul-2015
